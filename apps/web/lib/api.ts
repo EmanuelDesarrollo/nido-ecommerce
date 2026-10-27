@@ -1,5 +1,5 @@
 import { IDEMPOTENCY_HEADER, USER_HEADER, type ApiError as ApiErrorBody } from "@nido/shared";
-import { readStoredUserId } from "./session-storage";
+import { readStoredUserId, storeUser } from "./session-storage";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
@@ -38,6 +38,8 @@ export async function api<T>(path: string, { method = "GET", body, idempotencyKe
     throw new ApiError(0, "No pudimos conectar con el servidor. Revisa tu conexión e intenta de nuevo.");
   }
   if (res.ok) return (await res.json()) as T;
+  // The stored user no longer exists (e.g. the database was reset): sign out so the app asks again.
+  if (res.status === 401 && userId) storeUser(null);
 
   const error = (await res.json().catch(() => null)) as ApiErrorBody | null;
   const detail = Array.isArray(error?.message) ? error.message.join(", ") : error?.message;

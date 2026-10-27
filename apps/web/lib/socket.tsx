@@ -2,7 +2,7 @@
 
 import { SocketEvent, type SocketEventPayloads } from "@nido/shared";
 import { useRouter } from "next/navigation";
-import { createContext, Suspense, useContext, useEffect, useMemo, useRef } from "react";
+import { createContext, Suspense, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { io, type Socket } from "socket.io-client";
 import { toast } from "sonner";
 import { API_URL } from "./api";
@@ -51,8 +51,49 @@ export function useSocketEvent<E extends SocketEvent>(event: E, handler: (payloa
   }, [socket, event]);
 }
 
-/** Calls onChange whenever any live event arrives (optionally only for one gift). */
+/** Live connection state, for the "Reconectando…" hint. null while there is no socket (signed out). */
+export function useSocketConnected(): boolean | null {
+  const socket = useContext(SocketContext);
+  const [connected, setConnected] = useState<boolean | null>(null);
+  useEffect(() => {
+    if (!socket) return;
+    const on = () => setConnected(true);
+    const off = () => setConnected(false);
+    socket.on("connect", on);
+    socket.on("disconnect", off);
+    socket.io.on("reconnect_attempt", off);
+    return () => {
+      socket.off("connect", on);
+      socket.off("disconnect", off);
+      socket.io.off("reconnect_attempt", off);
+    };
+  }, [socket]);
+  return socket ? connected : null;
+}
+
+/**
+ * Calls onChange whenever any live event arrives (optionally only for one gift),
+ * and after a reconnection, since events sent while offline are lost.
+ */
 export function useGiftEvents(onChange: () => void, giftId?: string) {
+  const socket = useContext(SocketContext);
+  const onChangeRef = useRef(onChange);
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  });
+  useEffect(() => {
+    if (!socket) return;
+    let connectedBefore = socket.connected;
+    const resync = () => {
+      if (connectedBefore) onChangeRef.current();
+      connectedBefore = true;
+    };
+    socket.on("connect", resync);
+    return () => {
+      socket.off("connect", resync);
+    };
+  }, [socket]);
+
   const handle = (payload: { giftId: string }) => {
     if (!giftId || payload.giftId === giftId) onChange();
   };

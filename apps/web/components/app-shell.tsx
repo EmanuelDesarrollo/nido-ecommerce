@@ -4,12 +4,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSession } from "@/lib/session";
+import { useSocketConnected } from "@/lib/socket";
 import { Avatar } from "./avatar";
 import { Spinner } from "./ui";
 
 /** Page frame for signed-in screens: header with the current user, and a redirect to "/" without one. */
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, ready, signOut } = useSession();
+  const connected = useSocketConnected();
   const router = useRouter();
 
   useEffect(() => {
@@ -22,6 +24,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <Link href="/home" className="text-lg font-bold text-coral-600 md:text-xl">
           Nido <span className="font-medium text-stone-400">· Corazonada</span>
         </Link>
+        {connected === false && (
+          <span className="animate-pulse rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+            Reconectando…
+          </span>
+        )}
         {user && (
           <button
             onClick={() => {
