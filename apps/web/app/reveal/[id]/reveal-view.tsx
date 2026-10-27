@@ -39,7 +39,7 @@ function Reveal() {
   const gift = revealed ?? data;
 
   return (
-    <main className="flex flex-col gap-5">
+    <main className="mx-auto flex w-full max-w-xl flex-col gap-5">
       <BackLink href="/home" />
       {gift.status === "CLUES_REQUESTED" && (
         <Card className="text-center">

@@ -91,7 +91,7 @@ function Checkout() {
 
   if (current?.status === "APPROVED") {
     return (
-      <Card className="animate-pop-in mt-6 text-center">
+      <Card className="animate-pop-in mx-auto mt-6 w-full max-w-xl text-center">
         <p className="text-6xl">🎉</p>
         <h1 className="mt-3 text-2xl font-bold">¡Listo! Va en camino</h1>
         <p className="mt-2 text-stone-600">
@@ -109,7 +109,7 @@ function Checkout() {
 
   if (current?.status === "PENDING") {
     return (
-      <Card className="mt-6 text-center">
+      <Card className="mx-auto mt-6 w-full max-w-xl text-center">
         <Spinner label="Confirmando con el banco…" />
         <p className="text-sm text-stone-500">Esto se actualiza solo, no cierres la página.</p>
       </Card>
@@ -171,100 +171,104 @@ function Checkout() {
   const formComplete = cardNumber.replace(/\s/g, "").length === 16 && expiry.length === 5 && cvc.length === 3;
 
   return (
-    <main className="flex flex-col gap-5">
+    <main className="mx-auto flex w-full max-w-4xl flex-col gap-5">
       <BackLink href={`/gift/${id}`} label="Cambiar regalo" />
-      <h1 className="text-2xl font-bold">Pagar la sorpresa</h1>
+      <h1 className="text-2xl font-bold md:text-3xl">Pagar la sorpresa</h1>
 
-      <Card className="flex items-center gap-3 p-3">
-        <ProductImage src={product.imageUrl} alt={product.title} className="w-20 shrink-0" />
-        <div className="min-w-0 flex-1 text-sm">
-          <p className="font-semibold">{product.title}</p>
-          <p className="text-stone-500">
-            Para {recipientName} · Talla {variant.size}
-          </p>
-          {message && <p className="truncate italic">“{message}”</p>}
-        </div>
-        <p className="font-bold text-coral-700">{formatCop(product.priceCop)}</p>
-      </Card>
-
-      {rejected && (
-        <div className="animate-pop-in rounded-2xl bg-red-50 p-4 text-red-700 ring-1 ring-red-100">
-          <p className="font-semibold">Pago rechazado</p>
-          <p className="text-sm">{current.failureReason ?? "El banco no aprobó el pago."}</p>
-          <button onClick={retry} className={`${buttonClass.secondary} mt-3`}>
-            Reintentar con otra tarjeta
-          </button>
-        </div>
-      )}
-
-      {!rejected && (
-        <form onSubmit={pay} className="flex flex-col gap-4">
-          <div>
-            <p className="mb-2 text-xs font-semibold tracking-wide text-stone-500 uppercase">Tarjetas de prueba</p>
-            <div className="grid grid-cols-3 gap-2">
-              {DEMO_CARDS.map((card) => (
-                <button
-                  key={card.label}
-                  type="button"
-                  onClick={() => {
-                    setCardNumber(formatCardNumber(card.number));
-                    setExpiry("12/30");
-                    setCvc("123");
-                  }}
-                  className={`rounded-2xl px-2 py-2.5 text-xs font-semibold ring-1 transition active:scale-95 ${card.tone}`}
-                >
-                  Usar {card.label.toLowerCase()}
-                  <span className="block font-mono text-[10px] opacity-70">•••• {card.number.slice(-4)}</span>
-                </button>
-              ))}
-            </div>
+      <div className="grid gap-5 md:grid-cols-[1fr_1.2fr] md:items-start md:gap-8">
+        <Card className="flex items-center gap-3 p-3 md:sticky md:top-24 md:flex-col md:items-stretch md:p-5">
+          <ProductImage src={product.imageUrl} alt={product.title} className="w-20 shrink-0 md:w-full" />
+          <div className="min-w-0 flex-1 text-sm md:text-base">
+            <p className="font-semibold">{product.title}</p>
+            <p className="text-stone-500">
+              Para {recipientName} · Talla {variant.size}
+            </p>
+            {message && <p className="truncate italic md:whitespace-normal">“{message}”</p>}
           </div>
+          <p className="font-bold text-coral-700 md:text-xl">{formatCop(product.priceCop)}</p>
+        </Card>
 
-          <Card className="flex flex-col gap-3">
-            <label className="flex flex-col gap-1 text-sm font-medium">
-              Número de tarjeta
-              <input
-                inputMode="numeric"
-                autoComplete="cc-number"
-                value={cardNumber}
-                onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
-                placeholder="4242 4242 4242 4242"
-                className="rounded-xl border border-sand px-3 py-2.5 font-mono outline-none focus:border-coral-400"
-              />
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              <label className="flex flex-col gap-1 text-sm font-medium">
-                Vence
-                <input
-                  inputMode="numeric"
-                  autoComplete="cc-exp"
-                  value={expiry}
-                  onChange={(e) => setExpiry(formatExpiry(e.target.value))}
-                  placeholder="MM/AA"
-                  className="rounded-xl border border-sand px-3 py-2.5 font-mono outline-none focus:border-coral-400"
-                />
-              </label>
-              <label className="flex flex-col gap-1 text-sm font-medium">
-                CVC
-                <input
-                  inputMode="numeric"
-                  autoComplete="cc-csc"
-                  value={cvc}
-                  onChange={(e) => setCvc(e.target.value.replace(/\D/g, "").slice(0, 3))}
-                  placeholder="123"
-                  className="rounded-xl border border-sand px-3 py-2.5 font-mono outline-none focus:border-coral-400"
-                />
-              </label>
+        <div className="flex flex-col gap-5">
+          {rejected && (
+            <div className="animate-pop-in rounded-2xl bg-red-50 p-4 text-red-700 ring-1 ring-red-100">
+              <p className="font-semibold">Pago rechazado</p>
+              <p className="text-sm">{current.failureReason ?? "El banco no aprobó el pago."}</p>
+              <button onClick={retry} className={`${buttonClass.secondary} mt-3`}>
+                Reintentar con otra tarjeta
+              </button>
             </div>
-          </Card>
+          )}
 
-          {submitError && <p className="text-sm font-medium text-red-600">{submitError}</p>}
-          <button type="submit" disabled={!formComplete || submitting} className={buttonClass.primary}>
-            {submitting ? "Procesando…" : `Pagar ${formatCop(product.priceCop)}`}
-          </button>
-          <p className="text-center text-xs text-stone-400">Pago simulado: no se hace ningún cobro real.</p>
-        </form>
-      )}
+          {!rejected && (
+            <form onSubmit={pay} className="flex flex-col gap-4">
+              <div>
+                <p className="mb-2 text-xs font-semibold tracking-wide text-stone-500 uppercase">Tarjetas de prueba</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {DEMO_CARDS.map((card) => (
+                    <button
+                      key={card.label}
+                      type="button"
+                      onClick={() => {
+                        setCardNumber(formatCardNumber(card.number));
+                        setExpiry("12/30");
+                        setCvc("123");
+                      }}
+                      className={`rounded-2xl px-2 py-2.5 text-xs font-semibold ring-1 transition active:scale-95 ${card.tone}`}
+                    >
+                      Usar {card.label.toLowerCase()}
+                      <span className="block font-mono text-[10px] opacity-70">•••• {card.number.slice(-4)}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <Card className="flex flex-col gap-3">
+                <label className="flex flex-col gap-1 text-sm font-medium">
+                  Número de tarjeta
+                  <input
+                    inputMode="numeric"
+                    autoComplete="cc-number"
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
+                    placeholder="4242 4242 4242 4242"
+                    className="rounded-xl border border-sand px-3 py-2.5 font-mono outline-none focus:border-coral-400"
+                  />
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <label className="flex flex-col gap-1 text-sm font-medium">
+                    Vence
+                    <input
+                      inputMode="numeric"
+                      autoComplete="cc-exp"
+                      value={expiry}
+                      onChange={(e) => setExpiry(formatExpiry(e.target.value))}
+                      placeholder="MM/AA"
+                      className="rounded-xl border border-sand px-3 py-2.5 font-mono outline-none focus:border-coral-400"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-sm font-medium">
+                    CVC
+                    <input
+                      inputMode="numeric"
+                      autoComplete="cc-csc"
+                      value={cvc}
+                      onChange={(e) => setCvc(e.target.value.replace(/\D/g, "").slice(0, 3))}
+                      placeholder="123"
+                      className="rounded-xl border border-sand px-3 py-2.5 font-mono outline-none focus:border-coral-400"
+                    />
+                  </label>
+                </div>
+              </Card>
+
+              {submitError && <p className="text-sm font-medium text-red-600">{submitError}</p>}
+              <button type="submit" disabled={!formComplete || submitting} className={buttonClass.primary}>
+                {submitting ? "Procesando…" : `Pagar ${formatCop(product.priceCop)}`}
+              </button>
+              <p className="text-center text-xs text-stone-400">Pago simulado: no se hace ningún cobro real.</p>
+            </form>
+          )}
+        </div>
+      </div>
     </main>
   );
 }

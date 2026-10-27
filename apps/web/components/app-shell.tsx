@@ -17,9 +17,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, [ready, user, router]);
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 pb-10">
-      <header className="sticky top-0 z-10 -mx-4 mb-4 flex items-center justify-between bg-cream/90 px-4 py-3 backdrop-blur">
-        <Link href="/home" className="text-lg font-bold text-coral-600">
+    <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pb-10 md:px-8">
+      <header className="sticky top-0 z-10 -mx-4 mb-4 flex items-center justify-between bg-cream/90 px-4 py-3 backdrop-blur md:-mx-8 md:mb-8 md:px-8 md:py-5">
+        <Link href="/home" className="text-lg font-bold text-coral-600 md:text-xl">
           Nido <span className="font-medium text-stone-400">· Corazonada</span>
         </Link>
         {user && (

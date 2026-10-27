@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  CATEGORY_LABELS,
-  type CatalogResponse,
-  type GiftView as GiftViewDto,
-  type SenderGiftView,
-} from "@nido/shared";
+import { CATEGORY_LABELS, type CatalogResponse, type GiftView as GiftViewDto, type SenderGiftView } from "@nido/shared";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -35,7 +30,8 @@ function SenderGift() {
   useGiftEvents(reload, id);
 
   useEffect(() => {
-    if (gift?.role === "recipient") router.replace(gift.status === "CLUES_REQUESTED" ? `/clues/${id}` : `/reveal/${id}`);
+    if (gift?.role === "recipient")
+      router.replace(gift.status === "CLUES_REQUESTED" ? `/clues/${id}` : `/reveal/${id}`);
   }, [gift, id, router]);
 
   if (loading && !gift) return <Spinner />;
@@ -45,17 +41,23 @@ function SenderGift() {
   return (
     <main className="flex flex-col gap-5">
       <BackLink href="/home" />
-      <div className="flex items-center gap-3">
-        <Avatar user={gift.recipient} size={52} />
-        <div className="flex-1">
-          <h1 className="text-xl font-bold">Sorpresa para {gift.recipient.name}</h1>
-          <p className="text-sm text-stone-500">Presupuesto {formatCop(gift.budgetCop)}</p>
-        </div>
-        <StatusPill status={gift.status} role="sender" />
-      </div>
+      <div className="grid gap-5 lg:grid-cols-[340px_1fr] lg:items-start lg:gap-8">
+        <aside className="flex flex-col gap-5 lg:sticky lg:top-24">
+          <div className="flex items-center gap-3">
+            <Avatar user={gift.recipient} size={52} />
+            <div className="flex-1">
+              <h1 className="text-xl font-bold">Sorpresa para {gift.recipient.name}</h1>
+              <p className="text-sm text-stone-500">Presupuesto {formatCop(gift.budgetCop)}</p>
+            </div>
+            <StatusPill status={gift.status} role="sender" />
+          </div>
 
-      <CluesCard gift={gift} onChange={reload} />
-      <GiftStage gift={gift} />
+          <CluesCard gift={gift} onChange={reload} />
+        </aside>
+        <div className="min-w-0">
+          <GiftStage gift={gift} />
+        </div>
+      </div>
     </main>
   );
 }
@@ -80,7 +82,11 @@ function CluesCard({ gift, onChange }: { gift: SenderGiftView; onChange: () => v
       <Card className="text-center">
         <div className="flex justify-center gap-1.5 py-2" aria-hidden>
           {[0, 1, 2].map((i) => (
-            <span key={i} className="size-2.5 animate-bounce rounded-full bg-coral-400" style={{ animationDelay: `${i * 150}ms` }} />
+            <span
+              key={i}
+              className="size-2.5 animate-bounce rounded-full bg-coral-400"
+              style={{ animationDelay: `${i * 150}ms` }}
+            />
           ))}
         </div>
         <p className="font-semibold">Esperando las pistas de {gift.recipient.name}…</p>
@@ -108,7 +114,11 @@ function CluesCard({ gift, onChange }: { gift: SenderGiftView; onChange: () => v
       <p className="font-semibold">🕵️ Las pistas de {gift.recipient.name}</p>
       <dl className="mt-3 grid grid-cols-2 gap-3">
         {describeClues(gift.clues).map(({ label, value }, i) => (
-          <div key={label} className="animate-pop-in rounded-2xl bg-coral-50 p-3" style={{ animationDelay: `${i * 120}ms` }}>
+          <div
+            key={label}
+            className="animate-pop-in rounded-2xl bg-coral-50 p-3"
+            style={{ animationDelay: `${i * 120}ms` }}
+          >
             <dt className="text-xs text-stone-500">{label}</dt>
             <dd className="font-semibold">{value}</dd>
           </div>
@@ -121,7 +131,13 @@ function CluesCard({ gift, onChange }: { gift: SenderGiftView; onChange: () => v
 function GiftStage({ gift }: { gift: SenderGiftView }) {
   switch (gift.status) {
     case "CLUES_REQUESTED":
-      return null;
+      return (
+        <div className="hidden lg:block">
+          <EmptyState emoji="🕵️" title="El catálogo aparecerá cuando lleguen las pistas">
+            Lo ordenaremos con el puntaje Corazonada según sus respuestas.
+          </EmptyState>
+        </div>
+      );
     case "CLUES_ANSWERED":
     case "PAYMENT_REJECTED":
       return <Catalog gift={gift} />;
@@ -159,7 +175,7 @@ function GiftStage({ gift }: { gift: SenderGiftView }) {
 
 function ChosenProduct({ gift, children }: { gift: SenderGiftView; children: React.ReactNode }) {
   return (
-    <Card className="animate-pop-in flex flex-col gap-4 text-center">
+    <Card className="animate-pop-in mx-auto flex w-full max-w-xl flex-col gap-4 text-center">
       <div className="flex flex-col items-center gap-1">{children}</div>
       {gift.product && (
         <div className="flex items-center gap-3 rounded-2xl bg-cream p-3 text-left">
@@ -203,7 +219,7 @@ function Catalog({ gift }: { gift: SenderGiftView }) {
           Prueba con una nueva Corazonada con más presupuesto.
         </EmptyState>
       )}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
         {data?.products.map((product) => (
           <button
             key={product.id}
@@ -224,9 +240,7 @@ function Catalog({ gift }: { gift: SenderGiftView }) {
           </button>
         ))}
       </div>
-      {selected && (
-        <ProductSheet product={selected} gift={gift} onClose={() => setSelected(null)} />
-      )}
+      {selected && <ProductSheet product={selected} gift={gift} onClose={() => setSelected(null)} />}
     </section>
   );
 }

@@ -42,22 +42,22 @@ export function ProductSheet({
   }
 
   return (
-    <div className="fixed inset-0 z-30 flex items-end justify-center bg-ink/40 backdrop-blur-sm" onClick={onClose}>
+    <div className="fixed inset-0 z-30 flex items-end justify-center bg-ink/40 backdrop-blur-sm md:items-center md:p-6" onClick={onClose}>
       <div
         role="dialog"
         aria-modal="true"
         aria-label={product.title}
         onClick={(e) => e.stopPropagation()}
-        className="animate-pop-in max-h-[90vh] w-full max-w-md overflow-y-auto rounded-t-[2rem] bg-cream p-5 pb-8"
+        className="animate-pop-in max-h-[90vh] w-full max-w-md overflow-y-auto rounded-t-[2rem] bg-cream p-5 pb-8 md:max-w-2xl md:rounded-[2rem] md:p-8"
       >
-        <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-sand" />
+        <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-sand md:hidden" />
         <div className="flex gap-4">
-          <ProductImage src={product.imageUrl} alt={product.title} className="w-32 shrink-0 bg-white" />
+          <ProductImage src={product.imageUrl} alt={product.title} className="w-32 shrink-0 bg-white md:w-56" />
           <div className="flex flex-col gap-1">
             <span className="w-fit rounded-full bg-coral-500 px-2 py-0.5 text-xs font-bold text-white">
               Corazonada {product.score}%
             </span>
-            <h3 className="font-bold leading-tight">{product.title}</h3>
+            <h3 className="font-bold leading-tight md:text-xl">{product.title}</h3>
             <p className="text-xs text-stone-500">{CATEGORY_LABELS[product.category]}</p>
             <p className="text-lg font-semibold text-coral-700">{formatCop(product.priceCop)}</p>
           </div>

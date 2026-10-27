@@ -273,6 +273,7 @@ Script `prisma/seed.ts`:
 | `/reveal/[id]` | recipient | caja que se abre al tocar (animación CSS), revela producto, quién lo envió y el mensaje; reacción con emoji + nota de agradecimiento; luego "Devuélvele el gesto" → `/gift/new?to=andres` |
 
 - Un `SocketProvider` (contexto) que conecta con el userId actual y expone los eventos; toasts globales con `sonner` o similar.
+- Responsive: se diseña a 375px y en escritorio (`md`/`lg`) se aprovecha el ancho (bandeja en 2 columnas, regalo con panel lateral de pistas + catálogo de 3–4 columnas, detalle como modal, checkout en 2 columnas).
 - Estética cálida (no transaccional): colores coral/crema, bordes redondeados, emojis con moderación.
 - **Para la demo:** dos ventanas lado a lado (una normal y una incógnita), una como Andrés y otra como Laura.
 - La sesión ("Entrar como…") vive en `sessionStorage`, no en `localStorage`: dos **pestañas** del mismo navegador pueden ser Andrés y Laura (la ventana incógnita sigue funcionando).

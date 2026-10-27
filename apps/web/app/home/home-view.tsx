@@ -24,15 +24,18 @@ function Inbox() {
 
   return (
     <main className="flex flex-col gap-6">
-      <Link href="/gift/new" className={buttonClass.primary}>
-        🎁 Nueva Corazonada
-      </Link>
+      <div className="flex flex-col gap-1 md:flex-row md:items-end md:justify-between">
+        <h1 className="hidden text-3xl font-bold md:block">Tus sorpresas</h1>
+        <Link href="/gift/new" className={`${buttonClass.primary} md:w-auto`}>
+          🎁 Nueva Corazonada
+        </Link>
+      </div>
 
       {loading && !data && <Spinner label="Cargando tus sorpresas…" />}
       {error && !data && <ErrorState message={error} onRetry={reload} />}
 
       {data && (
-        <>
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
           <section className="flex flex-col gap-3">
             <h2 className="font-semibold">Sorpresas para ti</h2>
             {data.received.length === 0 ? (
@@ -54,7 +57,7 @@ function Inbox() {
               data.sent.map((gift) => <SentRow key={gift.id} gift={gift} />)
             )}
           </section>
-        </>
+        </div>
       )}
     </main>
   );
@@ -68,7 +71,11 @@ function ReceivedRow({ gift }: { gift: RecipientGiftView }) {
   const highlight = gift.status === "CLUES_REQUESTED" || gift.status === "PAID";
   return (
     <Link href={href} className={`${rowClass} ${highlight ? "ring-2 ring-coral-400" : ""}`}>
-      {gift.sender ? <Avatar user={gift.sender} /> : <span className="grid size-10 place-items-center text-2xl">🎁</span>}
+      {gift.sender ? (
+        <Avatar user={gift.sender} />
+      ) : (
+        <span className="grid size-10 place-items-center text-2xl">🎁</span>
+      )}
       <div className="min-w-0 flex-1">
         <p className="truncate font-medium">{gift.sender ? `De ${gift.sender.name}` : "De alguien especial"}</p>
         <p className="text-xs text-stone-500">{new Date(gift.createdAt).toLocaleDateString("es-CO")}</p>

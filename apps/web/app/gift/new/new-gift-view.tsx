@@ -46,7 +46,7 @@ function NewGiftForm() {
   }
 
   return (
-    <main className="flex flex-col gap-6">
+    <main className="mx-auto flex w-full max-w-xl flex-col gap-6">
       <BackLink href="/home" />
       <div>
         <h1 className="text-2xl font-bold">Nueva Corazonada</h1>

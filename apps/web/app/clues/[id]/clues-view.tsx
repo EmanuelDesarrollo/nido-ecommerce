@@ -70,7 +70,7 @@ function CluesGame() {
 
   if (gift.status !== "CLUES_REQUESTED") {
     return (
-      <Card className="animate-pop-in text-center">
+      <Card className="animate-pop-in mx-auto w-full max-w-xl text-center">
         <p className="text-5xl">💌</p>
         <h1 className="mt-3 text-xl font-bold">¡Gracias por las pistas!</h1>
         <p className="mt-2 text-stone-600">Alguien está preparando algo con ellas. Te avisaremos cuando vaya en camino.</p>
@@ -115,7 +115,7 @@ function CluesGame() {
   }
 
   return (
-    <main className="flex flex-col gap-5">
+    <main className="mx-auto flex w-full max-w-xl flex-col gap-5">
       <div className="text-center">
         <p className="text-4xl">🎁</p>
         <h1 className="mt-2 text-xl font-bold">Alguien te prepara una sorpresa</h1>
@@ -156,7 +156,7 @@ function CluesGame() {
         {step === 1 && (
           <>
             <h2 className="text-lg font-bold">{CLUE_QUESTIONS.style.title}</h2>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
               {STYLES.map((s) => (
                 <button key={s} onClick={() => setDraft({ ...draft, style: s })} className={`${chipClass(draft.style === s)} py-4`}>
                   <span className="block text-2xl">{STYLE_EMOJI[s]}</span>
