@@ -23,6 +23,15 @@ El detalle completo (idea, modelo de datos, endpoints, eventos, fases) está en 
 - Frontend mobile first (diseñar a 375px). Componentes con sockets o interacción → `'use client'`. Sin server actions.
 - Commits pequeños con conventional commits (`feat:`, `fix:`, `chore:`, `test:`).
 
+### Frontend Next.js
+- Usa solo App Router (`app/`), nunca Pages Router.
+- Usa layouts y Server Components solo para el shell estático; las pantallas con sockets, usuario actual o interacción son `'use client'` (decisión del plan, tiene prioridad).
+- Cada pantalla que carga datos debe tener estados de carga, vacío y error visibles (`loading.tsx`/`error.tsx` o estados en el componente).
+- Imágenes de producto con `next/image`; configura `images.remotePatterns` para `cdn.dummyjson.com` e `i.pravatar.cc`.
+- Usa el `metadata` export en el layout raíz (título "Nido · Corazonada"), sin `generateMetadata` por página.
+- Corre `next build` antes de cada commit del frontend.
+- Con `cacheComponents` activo, las vistas cliente que usan `useParams`/`useSearchParams` van dentro de un `<Suspense>` (el `page.tsx` de servidor lo pone), o el build falla.
+
 ## Seguridad
 - Cero secretos en el repositorio. Usa variables de entorno y mantén actualizados `apps/api/.env.example` y `apps/web/.env.example`.
 - CORS restringido a `CORS_ORIGIN`. Usa helmet.

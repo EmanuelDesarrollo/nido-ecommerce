@@ -23,3 +23,13 @@
   - CORS de Socket.io con un `IoAdapter` que reutiliza `CORS_ORIGIN`; `.env` local con `process.loadEnvFile()` (sin dependencias nuevas).
   - Se agregó `socket.io-client` a `apps/web` (lo necesita la Fase 2) y lo reutiliza el script de humo.
   - Pendiente conocido: dos checkouts *simultáneos* con la misma Idempotency-Key chocan con el índice único y el segundo da 500 (los reintentos secuenciales sí devuelven el mismo pago).
+
+## Fase 2 — Frontend
+- **IA:** generó las 7 pantallas del plan (entrar como, bandeja, nueva Corazonada, juego de pistas, regalo con catálogo y detalle, checkout, destape), `SessionProvider`, `SocketProvider` con toasts globales (`sonner`), `useApi` y la animación de unboxing en CSS.
+- **Decisiones/correcciones:**
+  - El usuario agregó a CLAUDE.md las reglas de frontend (App Router, `next/image` con `remotePatterns`, estados de carga/vacío/error, `next build` antes de cada commit).
+  - Con `cacheComponents`, cada `page.tsx` es un Server Component que envuelve la vista cliente en `<Suspense>`; el build falló una vez por `usePathname` en los toasts del layout (se cambió a `window.location` al momento del evento y se envolvió en `Suspense`).
+  - ESLint (reglas de React 19) marcó `setState` dentro de efectos: se reescribió con estado derivado (`useApi`), `useSyncExternalStore` (sesión) y `useMemo` (socket), sin desactivar la regla.
+  - Sesión en `sessionStorage` para poder usar dos pestañas como Andrés y Laura.
+  - Una clave de idempotencia por intento de pago: se regenera solo al reintentar tras un rechazo.
+  - No había navegador automatizado en la sesión: se verificó con `tsc`, `eslint`, `next build`, compilación de cada ruta en dev, el optimizador de imágenes y `pnpm smoke`; el recorrido visual con dos ventanas lo hace el usuario.

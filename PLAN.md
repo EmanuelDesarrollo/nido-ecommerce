@@ -275,6 +275,9 @@ Script `prisma/seed.ts`:
 - Un `SocketProvider` (contexto) que conecta con el userId actual y expone los eventos; toasts globales con `sonner` o similar.
 - Estética cálida (no transaccional): colores coral/crema, bordes redondeados, emojis con moderación.
 - **Para la demo:** dos ventanas lado a lado (una normal y una incógnita), una como Andrés y otra como Laura.
+- La sesión ("Entrar como…") vive en `sessionStorage`, no en `localStorage`: dos **pestañas** del mismo navegador pueden ser Andrés y Laura (la ventana incógnita sigue funcionando).
+- Los toasts globales se omiten cuando ya estás viendo esa sorpresa (la pantalla se actualiza sola por socket).
+- Quien recibe reutiliza su perfil de gustos: el juego de pistas se precarga con sus últimas respuestas.
 
 ---
 
