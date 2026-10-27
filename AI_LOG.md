@@ -34,3 +34,8 @@
   - Una clave de idempotencia por intento de pago: se regenera solo al reintentar tras un rechazo.
   - No había navegador automatizado en la sesión: se verificó con `tsc`, `eslint`, `next build`, compilación de cada ruta en dev, el optimizador de imágenes y `pnpm smoke`; el recorrido visual con dos ventanas lo hace el usuario.
   - **Usuario:** pidió que en escritorio no se viera como un teléfono. **IA:** layout responsive (mobile first + breakpoints `md`/`lg`): contenedor de hasta 6xl, bandeja en 2 columnas, regalo con panel lateral de pistas y catálogo de 3–4 columnas, detalle como modal centrado, checkout en 2 columnas y formularios centrados a ancho legible.
+
+## Fase 3 — Despliegue final y casos límite
+- **IA:** `error.tsx` y `not-found.tsx` globales; un 401 cierra la sesión (usuario borrado o base reiniciada); al reconectar el socket se recargan los datos (eventos perdidos mientras Render dormía o se cayó la red); aviso "Reconectando…" en el encabezado.
+- **Verificación:** `pnpm smoke` contra producción (Render) pasó completo, con las 3 tarjetas: rechazada, pendiente que se resuelve sola y aprobada.
+- **Usuario:** recorrió el flujo con dos ventanas en local y validó el diseño responsive.
