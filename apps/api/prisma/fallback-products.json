@@ -1,0 +1,334 @@
+[
+  {
+    "id": 180,
+    "title": "Dress Pea",
+    "price": 49.99,
+    "tags": [
+      "clothing",
+      "dresses"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/womens-dresses/dress-pea/thumbnail.webp",
+    "category": "womens-dresses"
+  },
+  {
+    "id": 179,
+    "title": "Corset With Black Skirt",
+    "price": 79.99,
+    "tags": [
+      "clothing",
+      "corsets",
+      "skirts"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/womens-dresses/corset-with-black-skirt/thumbnail.webp",
+    "category": "womens-dresses"
+  },
+  {
+    "id": 178,
+    "title": "Corset Leather With Skirt",
+    "price": 89.99,
+    "tags": [
+      "clothing",
+      "corsets",
+      "skirts"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/womens-dresses/corset-leather-with-skirt/thumbnail.webp",
+    "category": "womens-dresses"
+  },
+  {
+    "id": 163,
+    "title": "Girl Summer Dress",
+    "price": 19.99,
+    "tags": [
+      "clothing",
+      "girls' dresses"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/tops/girl-summer-dress/thumbnail.webp",
+    "category": "tops"
+  },
+  {
+    "id": 165,
+    "title": "Short Frock",
+    "price": 24.99,
+    "tags": [
+      "clothing",
+      "dresses"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/tops/short-frock/thumbnail.webp",
+    "category": "tops"
+  },
+  {
+    "id": 162,
+    "title": "Blue Frock",
+    "price": 29.99,
+    "tags": [
+      "clothing",
+      "dresses"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/tops/blue-frock/thumbnail.webp",
+    "category": "tops"
+  },
+  {
+    "id": 86,
+    "title": "Man Short Sleeve Shirt",
+    "price": 19.99,
+    "tags": [
+      "clothing",
+      "men's shirts"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/thumbnail.webp",
+    "category": "mens-shirts"
+  },
+  {
+    "id": 84,
+    "title": "Gigabyte Aorus Men Tshirt",
+    "price": 24.99,
+    "tags": [
+      "clothing",
+      "men's t-shirts"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/thumbnail.webp",
+    "category": "mens-shirts"
+  },
+  {
+    "id": 87,
+    "title": "Men Check Shirt",
+    "price": 27.99,
+    "tags": [
+      "clothing",
+      "men's shirts"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/thumbnail.webp",
+    "category": "mens-shirts"
+  },
+  {
+    "id": 185,
+    "title": "Black & Brown Slipper",
+    "price": 19.99,
+    "tags": [
+      "footwear",
+      "slippers"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/womens-shoes/black-&-brown-slipper/thumbnail.webp",
+    "category": "womens-shoes"
+  },
+  {
+    "id": 188,
+    "title": "Pampi Shoes",
+    "price": 29.99,
+    "tags": [
+      "footwear",
+      "casual shoes"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/womens-shoes/pampi-shoes/thumbnail.webp",
+    "category": "womens-shoes"
+  },
+  {
+    "id": 189,
+    "title": "Red Shoes",
+    "price": 34.99,
+    "tags": [
+      "footwear",
+      "women's shoes"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/womens-shoes/red-shoes/thumbnail.webp",
+    "category": "womens-shoes"
+  },
+  {
+    "id": 5,
+    "title": "Red Nail Polish",
+    "price": 8.99,
+    "tags": [
+      "beauty",
+      "nail polish"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/thumbnail.webp",
+    "category": "beauty"
+  },
+  {
+    "id": 1,
+    "title": "Essence Mascara Lash Princess",
+    "price": 9.99,
+    "tags": [
+      "beauty",
+      "mascara"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
+    "category": "beauty"
+  },
+  {
+    "id": 4,
+    "title": "Red Lipstick",
+    "price": 12.99,
+    "tags": [
+      "beauty",
+      "lipstick"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/thumbnail.webp",
+    "category": "beauty"
+  },
+  {
+    "id": 6,
+    "title": "Calvin Klein CK One",
+    "price": 49.99,
+    "tags": [
+      "fragrances",
+      "perfumes"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/thumbnail.webp",
+    "category": "fragrances"
+  },
+  {
+    "id": 9,
+    "title": "Dolce Shine Eau de",
+    "price": 69.99,
+    "tags": [
+      "fragrances",
+      "perfumes"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/thumbnail.webp",
+    "category": "fragrances"
+  },
+  {
+    "id": 111,
+    "title": "Selfie Stick Monopod",
+    "price": 12.99,
+    "tags": [
+      "electronics",
+      "selfie accessories"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/selfie-stick-monopod/thumbnail.webp",
+    "category": "mobile-accessories"
+  },
+  {
+    "id": 110,
+    "title": "Selfie Lamp with iPhone",
+    "price": 14.99,
+    "tags": [
+      "electronics",
+      "selfie accessories"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/selfie-lamp-with-iphone/thumbnail.webp",
+    "category": "mobile-accessories"
+  },
+  {
+    "id": 104,
+    "title": "Apple iPhone Charger",
+    "price": 19.99,
+    "tags": [
+      "electronics",
+      "chargers"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-iphone-charger/thumbnail.webp",
+    "category": "mobile-accessories"
+  },
+  {
+    "id": 109,
+    "title": "Monopod",
+    "price": 19.99,
+    "tags": [
+      "electronics",
+      "camera accessories"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/monopod/thumbnail.webp",
+    "category": "mobile-accessories"
+  },
+  {
+    "id": 108,
+    "title": "iPhone 12 Silicone Case with MagSafe Plum",
+    "price": 29.99,
+    "tags": [
+      "electronics",
+      "phone accessories"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/iphone-12-silicone-case-with-magsafe-plum/thumbnail.webp",
+    "category": "mobile-accessories"
+  },
+  {
+    "id": 46,
+    "title": "Plant Pot",
+    "price": 14.99,
+    "tags": [
+      "home decor",
+      "plant accessories"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/thumbnail.webp",
+    "category": "home-decoration"
+  },
+  {
+    "id": 44,
+    "title": "Family Tree Photo Frame",
+    "price": 29.99,
+    "tags": [
+      "home decor",
+      "photo frame"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/family-tree-photo-frame/thumbnail.webp",
+    "category": "home-decoration"
+  },
+  {
+    "id": 45,
+    "title": "House Showpiece Plant",
+    "price": 39.99,
+    "tags": [
+      "home decor",
+      "artificial plants"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/thumbnail.webp",
+    "category": "home-decoration"
+  },
+  {
+    "id": 58,
+    "title": "Fork",
+    "price": 3.99,
+    "tags": [
+      "kitchen tools",
+      "utensils"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/fork/thumbnail.webp",
+    "category": "kitchen-accessories"
+  },
+  {
+    "id": 69,
+    "title": "Plate",
+    "price": 3.99,
+    "tags": [
+      "dinnerware",
+      "plates"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/plate/thumbnail.webp",
+    "category": "kitchen-accessories"
+  },
+  {
+    "id": 59,
+    "title": "Glass",
+    "price": 4.99,
+    "tags": [
+      "drinkware",
+      "glasses"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/glass/thumbnail.webp",
+    "category": "kitchen-accessories"
+  },
+  {
+    "id": 74,
+    "title": "Spoon",
+    "price": 4.99,
+    "tags": [
+      "kitchen tools",
+      "utensils"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/spoon/thumbnail.webp",
+    "category": "kitchen-accessories"
+  },
+  {
+    "id": 49,
+    "title": "Black Aluminium Cup",
+    "price": 5.99,
+    "tags": [
+      "drinkware",
+      "cups"
+    ],
+    "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-aluminium-cup/thumbnail.webp",
+    "category": "kitchen-accessories"
+  }
+]

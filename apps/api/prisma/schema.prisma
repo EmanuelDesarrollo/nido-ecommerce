@@ -7,9 +7,95 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Phase 0 placeholder: the full data model lands in Phase 1.
 model User {
-  id        String @id
-  name      String
-  avatarUrl String
+  id            String @id
+  name          String
+  avatarUrl     String
+  /// Latest clues answered by this user: a reusable taste profile.
+  tasteProfile  Json?
+  sentGifts     Gift[] @relation("sender")
+  receivedGifts Gift[] @relation("recipient")
+}
+
+model Product {
+  id         Int              @id @default(autoincrement())
+  externalId Int              @unique
+  title      String
+  /// One of: moda, belleza, tecnologia, hogar
+  category   String
+  tags       String[]
+  priceCop   Int
+  imageUrl   String
+  variants   ProductVariant[]
+  gifts      Gift[]
+}
+
+model ProductVariant {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+  /// "XS".."XL" for fashion, "UNICA" for everything else
+  size      String
+  stock     Int
+  gifts     Gift[]
+
+  @@unique([productId, size])
+}
+
+model Gift {
+  id           String          @id
+  senderId     String
+  recipientId  String
+  sender       User            @relation("sender", fields: [senderId], references: [id])
+  recipient    User            @relation("recipient", fields: [recipientId], references: [id])
+  budgetCop    Int
+  status       GiftStatus
+  clues        Json?
+  productId    Int?
+  product      Product?        @relation(fields: [productId], references: [id])
+  variantId    Int?
+  variant      ProductVariant? @relation(fields: [variantId], references: [id])
+  message      String?
+  reaction     String?
+  thankYouNote String?
+  revealedAt   DateTime?
+  payments     Payment[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([senderId])
+  @@index([recipientId])
+}
+
+model Payment {
+  id             String        @id @default(cuid())
+  giftId         String
+  gift           Gift          @relation(fields: [giftId], references: [id])
+  productId      Int
+  variantId      Int
+  amountCop      Int
+  status         PaymentStatus
+  cardLast4      String
+  idempotencyKey String        @unique
+  failureReason  String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([giftId])
+}
+
+enum GiftStatus {
+  CLUES_REQUESTED
+  CLUES_ANSWERED
+  PAYMENT_PENDING
+  PAYMENT_REJECTED
+  PAID
+  REVEALED
+  THANKED
+}
+
+enum PaymentStatus {
+  APPROVED
+  REJECTED
+  PENDING
 }

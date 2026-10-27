@@ -9,7 +9,8 @@
     "dev": "pnpm --filter @nido/shared build && concurrently -n shared,api,web -c gray,magenta,cyan \"pnpm --filter @nido/shared dev\" \"pnpm --filter api dev\" \"pnpm --filter web dev\"",
     "build": "pnpm --filter api build && pnpm --filter web build",
     "test": "pnpm --filter api test",
-    "build:api": "pnpm --filter @nido/shared build && pnpm --filter api build"
+    "build:api": "pnpm --filter @nido/shared build && pnpm --filter api build",
+    "smoke": "node scripts/smoke.mjs"
   },
   "devDependencies": {
     "concurrently": "^10.0.6"

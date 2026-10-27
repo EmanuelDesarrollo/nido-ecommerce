@@ -9,10 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@nido/shared": "workspace:*",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "@nido/shared": "workspace:*"
+    "socket.io-client": "^4.8.4"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",

@@ -170,6 +170,16 @@ enum GiftStatus {
 enum PaymentStatus { APPROVED REJECTED PENDING }
 ```
 
+### Ajustes al modelo hechos en la Fase 1
+- `Gift.id` lo genera el dominio (`randomUUID`) y `Gift` tiene relaciones a `Product` y `ProductVariant` para las consultas de detalle.
+- `ProductVariant` tiene `@@unique([productId, size])` (upsert idempotente del seed).
+- `Payment` guarda `productId`, `variantId` y `updatedAt`: la resolución de un pago pendiente necesita saber qué variante descontar.
+- El checkout solo se permite desde `CLUES_ANSWERED` o `PAYMENT_REJECTED`; `PAYMENT_PENDING → PAID` queda reservado a la resolución asíncrona (evita un doble cobro).
+- Errores de dominio → HTTP con `DomainErrorFilter` (not_found 404, forbidden 403, conflict 409, unprocessable 422). Un pago rechazado **no** es error HTTP: el checkout responde 200 con `payment.status = REJECTED`.
+- Seed: DummyJSON no trae estilo, así que cada producto recibe un tag de estilo determinista (`STYLES[id % 4]`); el stock de moda es pseudoaleatorio determinista (0–5). El catálogo solo se carga si la tabla está vacía, para que los redeploys no reinicien el stock vendido.
+- Al arrancar, los pagos que quedaron `PENDING` (timers perdidos por un reinicio) se vuelven a programar.
+- `pnpm smoke` (`scripts/smoke.mjs`): prueba de punta a punta HTTP + Socket.io con las 3 tarjetas; acepta `API_URL` para correrla contra producción.
+
 ### Transiciones válidas (en `gift.entity.ts`; cualquier otra lanza `InvalidTransitionError` → HTTP 409)
 - `CLUES_REQUESTED → CLUES_ANSWERED` (solo quien recibe)
 - `CLUES_REQUESTED → CLUES_ANSWERED` vía "seguir sin pistas" (quien regala; `clues = null`, el puntaje usa solo el presupuesto)

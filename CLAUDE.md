@@ -32,6 +32,7 @@ El detalle completo (idea, modelo de datos, endpoints, eventos, fases) está en 
 - `pnpm dev`: api + web en paralelo
 - `pnpm build`: shared → api → web
 - `pnpm test`: tests de la api (Jest)
+- `pnpm smoke`: flujo completo contra la API (`API_URL=https://… pnpm smoke` para producción)
 - `pnpm --filter api prisma migrate dev` / `pnpm --filter api prisma db seed`
 - `docker compose up -d`: Postgres local
 
