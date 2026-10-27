@@ -3,7 +3,7 @@
   "private": true,
   "packageManager": "pnpm@11.9.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.13"
   },
   "scripts": {
     "dev": "pnpm --filter @nido/shared build && concurrently -n shared,api,web -c gray,magenta,cyan \"pnpm --filter @nido/shared dev\" \"pnpm --filter api dev\" \"pnpm --filter web dev\"",

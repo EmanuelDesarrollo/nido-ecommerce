@@ -35,7 +35,7 @@ Monorepo con **pnpm workspaces** (un solo repositorio de GitHub).
 ```
 /
 ├── apps/
-│   ├── api/        NestJS + TypeScript + Prisma + Socket.io  → Railway
+│   ├── api/        NestJS + TypeScript + Prisma + Socket.io  → Render
 │   └── web/        Next.js (App Router) + TypeScript + Tailwind → Vercel
 ├── packages/
 │   └── shared/     tipos, DTOs, enums de estado y nombres de eventos de socket (compilado con tsc a dist/)
@@ -45,7 +45,7 @@ Monorepo con **pnpm workspaces** (un solo repositorio de GitHub).
 └── README.md
 ```
 
-- **Base de datos:** PostgreSQL (Railway) con Prisma 6. En local, Postgres por `docker-compose.yml` en el puerto **5433**.
+- **Base de datos:** PostgreSQL (Render Postgres) con Prisma 6. En local, Postgres por `docker-compose.yml` en el puerto **5433**.
 - **Versiones fijadas:** NestJS 11 (la 12 es solo ESM y complica Jest), Prisma 6.19 (`latest` es una RC de la 8), TypeScript 5.9, Next 16.
 - **Shared:** `packages/shared` con `"main": "dist/index.js"`, `"types": "dist/index.d.ts"` y `build: tsc`. Las apps lo consumen con `"@nido/shared": "workspace:*"`. En Next, agregar `transpilePackages: ['@nido/shared']`. **Si el paquete compartido da problemas de build por más de 15 min, duplicar los tipos y anotarlo.**
 - **Frontend:** casi todo `'use client'` (hay sockets e interacción). Sin server actions. Mobile first (diseñar a 375px). Tailwind.
@@ -279,20 +279,21 @@ Script `prisma/seed.ts`:
 
 ## 11. Despliegue (un solo repositorio, sin GitHub Actions obligatorias)
 
-Vercel y Railway se conectan **al mismo repositorio** y despliegan solos al hacer push a `main`. GitHub Actions es opcional (solo para correr tests en PR).
+Vercel y Render se conectan **al mismo repositorio** y despliegan solos al hacer push a `main`. GitHub Actions es opcional (solo para correr tests en PR). Railway se descartó porque no admite registros nuevos.
 
-**Railway (api + Postgres):**
-- New Project → Deploy from GitHub repo → agregar el plugin PostgreSQL.
-- Root directory: `/` (raíz del monorepo, para que pnpm vea el workspace).
-- Build: `pnpm install --frozen-lockfile && pnpm build:api` (shared → `prisma generate` → `nest build`; Prisma debe generarse **antes** de compilar). Ya configurado en `railway.json` (build, start, healthcheck y watch paths).
-- Start: `pnpm --filter api prisma migrate deploy && pnpm --filter api prisma db seed && node apps/api/dist/main.js`
-- Variables: `DATABASE_URL` (referencia al plugin), `CORS_ORIGIN=https://<app>.vercel.app`, `PORT` (lo inyecta Railway; leer `process.env.PORT`).
-- Watch paths: `apps/api/**`, `packages/shared/**`.
-- Generar el dominio público en Settings → Networking.
+**Render (api: Web Service gratis + Render Postgres):**
+- Crear primero la base Render Postgres; luego New → Web Service desde el repositorio.
+- Root Directory: vacío (raíz del monorepo, para que pnpm vea el workspace).
+- Build: `corepack enable && pnpm install --frozen-lockfile && pnpm --filter @nido/shared build && pnpm --filter api build` (el script `build` de la api ya corre `prisma generate` antes de `nest build`).
+- Start (Fase 0): `node apps/api/dist/main.js`
+- Start (desde Fase 1): `pnpm --filter api exec prisma migrate deploy && pnpm --filter api exec prisma db seed && node apps/api/dist/main.js`
+- Variables: `DATABASE_URL` (Internal URL de Render Postgres), `CORS_ORIGIN=https://<app>.vercel.app` (acepta `*` mientras se configura), `NODE_VERSION=22` (pnpm 11 exige Node ≥ 22.13; con 20 falla el install). `PORT` lo inyecta Render; `main.ts` escucha en `process.env.PORT` y `0.0.0.0`.
+- Health check path: `/health`.
+- El plan gratis duerme tras 15 min sin tráfico: se mantiene despierto con un ping externo a `/health`.
 
 **Vercel (web):**
 - Import del mismo repositorio → Root Directory: `apps/web` (Vercel detecta pnpm workspaces).
-- Variable: `NEXT_PUBLIC_API_URL=https://<api>.up.railway.app`.
+- Variable: `NEXT_PUBLIC_API_URL=https://<api>.onrender.com`.
 - El script `build` de `apps/web` compila `@nido/shared` antes de `next build` (Vercel no lo haría solo).
 
 **Fallas típicas a revisar:** CORS con el dominio exacto de Vercel (sin `/` final), Socket.io en el cliente con `transports: ['websocket']`, y que Prisma genere el cliente en el build.
@@ -306,7 +307,7 @@ Vercel y Railway se conectan **al mismo repositorio** y despliegan solos al hace
 - `packages/shared` compilando y consumido por ambos.
 - Prisma + docker-compose de Postgres en local.
 - `.env.example`, `.gitignore`, scripts en la raíz: `dev`, `build`, `test`.
-- **Detenerse aquí para que el usuario despliegue en Railway y Vercel y confirme que la web habla con la API en producción.**
+- **Detenerse aquí para que el usuario despliegue en Render y Vercel y confirme que la web habla con la API en producción.**
 
 ### Fase 1 — Backend core (≈60 min)
 - Schema + migración + seed.

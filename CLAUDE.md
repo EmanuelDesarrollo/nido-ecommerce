@@ -12,7 +12,7 @@ El detalle completo (idea, modelo de datos, endpoints, eventos, fases) está en 
 
 ## Stack
 - Monorepo pnpm workspaces: `apps/api` (NestJS + Prisma + Socket.io), `apps/web` (Next.js App Router + Tailwind), `packages/shared` (tipos, enums, eventos; compila con tsc).
-- PostgreSQL. Despliegue: api → Railway, web → Vercel (mismo repositorio).
+- PostgreSQL. Despliegue: api → Render (Web Service gratis + Render Postgres), web → Vercel (mismo repositorio). Configuración en PLAN.md §11.
 
 ## Convenciones
 - TypeScript estricto en todo. Sin `any`.
