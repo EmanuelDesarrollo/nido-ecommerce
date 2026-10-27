@@ -1,0 +1,17 @@
+{
+  "name": "nido-ecommerce",
+  "private": true,
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @nido/shared build && concurrently -n shared,api,web -c gray,magenta,cyan \"pnpm --filter @nido/shared dev\" \"pnpm --filter api dev\" \"pnpm --filter web dev\"",
+    "build": "pnpm --filter api build && pnpm --filter web build",
+    "test": "pnpm --filter api test",
+    "build:api": "pnpm --filter @nido/shared build && pnpm --filter api build"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}

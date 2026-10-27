@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-cream: #fff8f1;
+  --color-coral-500: #f2665a;
+  --color-coral-600: #e04f43;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--color-cream);
+  color: #292524;
+}
