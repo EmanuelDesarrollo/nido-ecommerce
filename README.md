@@ -240,6 +240,7 @@ pnpm smoke    # 46 verificaciones de punta a punta (HTTP + Socket.io)
 
 - **IA real para recomendar.** Embeddings del catálogo y del perfil de gustos, o un LLM que razone sobre ambos, en lugar de reglas fijas. `matchScore` ya está aislado detrás de una función pura, así que se reemplazaría sin tocar el resto.
 - **Vaca grupal.** Varias personas pagan una misma Corazonada, con una barra de progreso en vivo. Implicaría pagos parciales por `Gift` y un estado `FUNDING`.
+- **Regalar a alguien no registrado.** quien regala crea la sorpresa con solo el nombre del destinatario; el sistema genera un link mágico (token aleatorio hasheado, con expiración) que se comparte por WhatsApp; quien recibe responde las pistas y deja su dirección como invitado, sin registro; tras destapar se le invita a crear cuenta, vinculando su perfil de gustos.
 - **Recordatorios de fechas especiales** usando los perfiles de gustos guardados.
 - **Webhooks reales + cola (BullMQ)** para pagos pendientes. Hoy es un `setTimeout` en memoria, que se reprograma al reiniciar pero no sobrevive a varias instancias.
 - **Auth real** (JWT o sesión) en lugar del selector de usuario.
